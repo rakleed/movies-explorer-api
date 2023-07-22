@@ -1,24 +1,26 @@
-const { Error } = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const BadRequest = require('../errors/BadRequest');
-const NotFound = require('../errors/NotFound');
-const Conflict = require('../errors/Conflict');
-const { SECRET_PASSWORD_KEY } = require('../utils/constants');
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/user.js';
+import { BadRequest } from '../errors/BadRequest.js';
+import { NotFound } from '../errors/NotFound.js';
+import { Conflict } from '../errors/Conflict.js';
+import { JWT_SECRET } from '../utils/constants.js';
 
-module.exports.login = (req, res, next) => {
+const { Error } = mongoose;
+
+const login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, SECRET_PASSWORD_KEY, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
       res.send({ token });
     })
     .catch(next);
 };
 
-module.exports.createUser = (req, res, next) => {
+const createUser = (req, res, next) => {
   const {
     email, password, name,
   } = req.body;
@@ -42,7 +44,7 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
-module.exports.getCurrentUser = (req, res, next) => {
+const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(new NotFound('Пользователь по указанному `_id` не найден.'))
     .then((user) => res.send(user))
@@ -54,7 +56,7 @@ module.exports.getCurrentUser = (req, res, next) => {
     });
 };
 
-module.exports.updateUserInfo = (req, res, next) => {
+const updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
@@ -66,4 +68,8 @@ module.exports.updateUserInfo = (req, res, next) => {
       }
       next(err);
     });
+};
+
+export {
+  login, createUser, getCurrentUser, updateUserInfo,
 };

@@ -1,24 +1,43 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 const {
-  NODE_ENV, PORT, DATABASE_URL, JWT_SECRET,
+  NODE_ENV,
+} = process.env;
+let {
+  PORT, DATABASE_URL, JWT_SECRET,
 } = process.env;
 
 // site port
-module.exports.PORT = NODE_ENV === 'production' ? PORT : 3000;
+PORT = NODE_ENV === 'production' ? PORT : 3000;
 
 // MongoDB
-module.exports.DATABASE_URL = NODE_ENV === 'production' ? DATABASE_URL : 'mongodb://127.0.0.1:27017/bitfilmsdb';
-module.exports.SECRET_PASSWORD_KEY = NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key';
+DATABASE_URL = NODE_ENV === 'production' ? DATABASE_URL : 'mongodb://127.0.0.1:27017/bitfilmsdb';
+JWT_SECRET = NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key';
 
 // regexes
-module.exports.REGEX_URL = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-module.exports.REGEX_ID = /[a-z0-9]{24}/;
+const REGEX_URL = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
+const REGEX_ID = /[a-z0-9]{24}/;
 
 // errors
-module.exports.BAD_REQUEST_STATUS = 400;
-module.exports.UNAUTHORIZED_STATUS = 401;
-module.exports.FORBIDDEN_STATUS = 403;
-module.exports.NOT_FOUND_STATUS = 404;
-module.exports.INTERNAL_SERVER_ERROR_STATUS = 500;
-module.exports.INTERNAL_SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка.';
+const BAD_REQUEST_STATUS = 400;
+const UNAUTHORIZED_STATUS = 401;
+const FORBIDDEN_STATUS = 403;
+const NOT_FOUND_STATUS = 404;
+const CONFLICT_STATUS = 409;
+const INTERNAL_SERVER_ERROR_STATUS = 500;
+const INTERNAL_SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка.';
+
+export {
+  PORT,
+  DATABASE_URL,
+  JWT_SECRET,
+  REGEX_URL,
+  REGEX_ID,
+  BAD_REQUEST_STATUS,
+  UNAUTHORIZED_STATUS,
+  FORBIDDEN_STATUS,
+  NOT_FOUND_STATUS,
+  CONFLICT_STATUS,
+  INTERNAL_SERVER_ERROR_STATUS,
+  INTERNAL_SERVER_ERROR_MESSAGE,
+};

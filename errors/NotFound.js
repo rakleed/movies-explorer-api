@@ -1,8 +1,10 @@
+import { NOT_FOUND_STATUS } from '../utils/constants.js';
+
 class NotFound extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 404;
+    this.statusCode = NOT_FOUND_STATUS;
   }
 }
 
-module.exports = NotFound;
+export { NotFound };

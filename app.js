@@ -1,14 +1,14 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const helmet = require('helmet');
-const { errors } = require('celebrate');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { limiter } = require('./middlewares/limiter');
-const routes = require('./routes');
-const {
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import helmet from 'helmet';
+import { errors } from 'celebrate';
+import { requestLogger, errorLogger } from './middlewares/logger.js';
+import { limiter } from './middlewares/limiter.js';
+import { index as routes } from './routes/index.js';
+import {
   DATABASE_URL, PORT, INTERNAL_SERVER_ERROR_STATUS, INTERNAL_SERVER_ERROR_MESSAGE,
-} = require('./utils/constants');
+} from './utils/constants.js';
 
 const app = express();
 
@@ -29,16 +29,9 @@ app.use(helmet());
 
 app.use(requestLogger);
 
-app.use(express.json());
-
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000,
-//   max: 100,
-//   standardHeaders: true,
-//   legacyHeaders: false,
-// });
-
 app.use(limiter);
+
+app.use(express.json());
 
 app.use(routes);
 

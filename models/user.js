@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
-const Unauthorized = require('../errors/Unauthorized');
+import mongoose from 'mongoose';
+import validator from 'validator';
+import bcrypt from 'bcryptjs';
+import { Unauthorized } from '../errors/Unauthorized.js';
 
 const { Schema } = mongoose;
 
@@ -44,4 +44,4 @@ userSchema.statics.findUserByCredentials = function findByCredits(email, passwor
     });
 };
 
-module.exports = mongoose.model('user', userSchema);
+export const User = mongoose.model('user', userSchema);

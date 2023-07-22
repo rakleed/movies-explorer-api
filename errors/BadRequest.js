@@ -1,8 +1,10 @@
+import { BAD_REQUEST_STATUS } from '../utils/constants.js';
+
 class BadRequest extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 400;
+    this.statusCode = BAD_REQUEST_STATUS;
   }
 }
 
-module.exports = BadRequest;
+export { BadRequest };

@@ -1,11 +1,18 @@
-const router = require('express').Router();
-const auth = require('../middlewares/auth');
+import express from 'express';
+import { signin } from './signin.js';
+import { signup } from './signup.js';
+import { auth } from '../middlewares/auth.js';
+import { users } from './users.js';
+import { movies } from './movies.js';
+import { notFoundPage } from './notFoundPage.js';
 
-router.use('/signup', require('./signup'));
-router.use('/signin', require('./signin'));
-router.use('/users', auth, require('./users'));
-router.use('/movies', auth, require('./movies'));
+const router = express.Router();
 
-router.use('*', require('./404'));
+router.use('/signup', signup);
+router.use('/signin', signin);
+router.use('/users', auth, users);
+router.use('/movies', auth, movies);
 
-module.exports = router;
+router.use('*', notFoundPage);
+
+export { router as index };

@@ -1,17 +1,19 @@
-const { Error } = require('mongoose');
-const Movie = require('../models/movie');
-const BadRequest = require('../errors/BadRequest');
-const Forbidden = require('../errors/Forbidden');
-const NotFound = require('../errors/NotFound');
+import mongoose from 'mongoose';
+import { Movie } from '../models/movie.js';
+import { BadRequest } from '../errors/BadRequest.js';
+import { Forbidden } from '../errors/Forbidden.js';
+import { NotFound } from '../errors/NotFound.js';
 
-module.exports.getMovies = (req, res, next) => {
+const { Error } = mongoose;
+
+const getMovies = (req, res, next) => {
   Movie.find({})
     .populate('owner')
     .then((movies) => res.send(movies))
     .catch(next);
 };
 
-module.exports.createMovie = (req, res, next) => {
+const createMovie = (req, res, next) => {
   const { ...props } = req.body;
 
   Movie.create({ ...props, owner: req.user._id })
@@ -24,7 +26,7 @@ module.exports.createMovie = (req, res, next) => {
     });
 };
 
-module.exports.deleteMovie = (req, res, next) => {
+const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
     .populate('owner')
     .orFail(new NotFound('Фильм с указанным `_id` не найден.'))
@@ -42,3 +44,5 @@ module.exports.deleteMovie = (req, res, next) => {
       next(err);
     });
 };
+
+export { getMovies, createMovie, deleteMovie };

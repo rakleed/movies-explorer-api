@@ -1,8 +1,10 @@
+import { UNAUTHORIZED_STATUS } from '../utils/constants.js';
+
 class Unauthorized extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 401;
+    this.statusCode = UNAUTHORIZED_STATUS;
   }
 }
 
-module.exports = Unauthorized;
+export { Unauthorized };

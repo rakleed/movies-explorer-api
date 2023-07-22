@@ -1,14 +1,14 @@
-const { celebrate, Joi } = require('celebrate');
-const { REGEX_URL, REGEX_ID } = require('../utils/constants');
+import { celebrate, Joi } from 'celebrate';
+import { REGEX_URL, REGEX_ID } from '../utils/constants.js';
 
-module.exports.validateLogin = celebrate({
+const validateLogin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 });
 
-module.exports.validateCreateUser = celebrate({
+const validateCreateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
@@ -16,14 +16,14 @@ module.exports.validateCreateUser = celebrate({
   }),
 });
 
-module.exports.validateUpdateUserInfo = celebrate({
+const validateUpdateUserInfo = celebrate({
   body: Joi.object().keys({
     email: Joi.string().email(),
     name: Joi.string().min(2).max(30),
   }),
 });
 
-module.exports.validateCreateMovie = celebrate({
+const validateCreateMovie = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -39,8 +39,16 @@ module.exports.validateCreateMovie = celebrate({
   }),
 });
 
-module.exports.validateDeleteMovie = celebrate({
+const validateDeleteMovie = celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().required().regex(REGEX_ID),
   }),
 });
+
+export {
+  validateLogin,
+  validateCreateUser,
+  validateUpdateUserInfo,
+  validateCreateMovie,
+  validateDeleteMovie,
+};
