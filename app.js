@@ -7,7 +7,9 @@ import { requestLogger, errorLogger } from './middlewares/logger.js';
 import { limiter } from './middlewares/limiter.js';
 import { index as routes } from './routes/index.js';
 import {
-  DATABASE_URL, PORT, INTERNAL_SERVER_ERROR_STATUS, INTERNAL_SERVER_ERROR_MESSAGE,
+  DATABASE_URL, PORT,
+  INTERNAL_SERVER_ERROR_STATUS,
+  INTERNAL_SERVER_ERROR_MESSAGE,
 } from './utils/constants.js';
 
 const app = express();

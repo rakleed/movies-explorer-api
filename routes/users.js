@@ -3,9 +3,7 @@ import {
   getCurrentUser,
   updateUserInfo,
 } from '../controllers/users.js';
-import {
-  validateUpdateUserInfo,
-} from '../middlewares/validation.js';
+import { validateUpdateUserInfo } from '../middlewares/validation.js';
 
 const router = express.Router();
 
