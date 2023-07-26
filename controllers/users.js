@@ -87,5 +87,9 @@ const logout = (req, res) => {
 };
 
 export {
-  login, createUser, getCurrentUser, updateUserInfo, logout,
+  login,
+  createUser,
+  getCurrentUser,
+  updateUserInfo,
+  logout,
 };

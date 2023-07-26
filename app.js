@@ -3,14 +3,11 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import { errors } from 'celebrate';
+import { DATABASE_URL, PORT } from './utils/constants.js';
 import { requestLogger, errorLogger } from './middlewares/logger.js';
 import { limiter } from './middlewares/limiter.js';
 import { index as routes } from './routes/index.js';
-import {
-  DATABASE_URL, PORT,
-  INTERNAL_SERVER_ERROR_STATUS,
-  INTERNAL_SERVER_ERROR_MESSAGE,
-} from './utils/constants.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express();
 
@@ -38,14 +35,9 @@ app.use(express.json());
 app.use(routes);
 
 app.use(errorLogger);
+
 app.use(errors());
-app.use((err, req, res, next) => {
-  const {
-    statusCode = INTERNAL_SERVER_ERROR_STATUS,
-    message = INTERNAL_SERVER_ERROR_MESSAGE,
-  } = err;
-  res.status(statusCode).send({ message });
-  next();
-});
+
+app.use(errorHandler);
 
 app.listen(PORT);

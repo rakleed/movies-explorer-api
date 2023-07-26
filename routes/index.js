@@ -4,7 +4,7 @@ import { signup } from './signup.js';
 import { auth } from '../middlewares/auth.js';
 import { users } from './users.js';
 import { movies } from './movies.js';
-import { signout } from './signout.js';
+// import { signout } from './signout.js';
 import { notFoundPage } from './notFoundPage.js';
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.use(auth);
 
 router.use('/users', users);
 router.use('/movies', movies);
-router.use('/signout', signout);
+// router.use('/signout', signout);
 
 router.use('*', notFoundPage);
 
