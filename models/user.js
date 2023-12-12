@@ -7,6 +7,12 @@ import { UNAUTHORIZED_MESSAGE_USER } from '../utils/constants.js';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    minLength: 2,
+    maxLength: 30,
+  },
   email: {
     type: String,
     required: true,
@@ -20,12 +26,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
     select: false,
-  },
-  name: {
-    type: String,
-    required: true,
-    minLength: 2,
-    maxLength: 30,
   },
 });
 

@@ -42,7 +42,7 @@ const deleteMovie = (req, res, next) => {
         throw new Forbidden(FORBIDDEN_MESSAGE_MOVIES);
       }
       return Movie.deleteOne(movie)
-        .then(res.send(RESPONSE_MESSAGE_MOVIES_DELETE));
+        .then(res.send({ message: RESPONSE_MESSAGE_MOVIES_DELETE }));
     })
     .catch((err) => {
       if (err instanceof Error.CastError) {
